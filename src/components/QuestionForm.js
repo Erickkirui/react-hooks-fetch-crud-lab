@@ -9,19 +9,41 @@ function QuestionForm(props) {
     answer4: "",
     correctIndex: 0,
   });
+  
 
   function handleChange(event) {
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
-    });
-  }
+    });}
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log(formData);
+    function handleSubmit(event) {
+      event.preventDefault()
+// create an array of answers from the individual answer fields in the form data
+      const answers = [
+        formData.answer1,
+        formData.answer2,
+        formData.answer3,
+        formData.answer4
+      ];
+      // create a new object with the prompt, answers array, and correct index from the form data
+      const questionData = {
+        prompt: formData.prompt,
+        answers: answers,
+        correctIndex: formData.correctIndex
+      };
+      
+      event.preventDefault();
+      fetch("http://localhost:4000/questions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(questionData ),
+  })
+    .then((r) => r.json())
+    .then((data) => {console.log(questionData )
+    })
   }
-
+  
   return (
     <section>
       <h1>New Question</h1>
@@ -89,5 +111,6 @@ function QuestionForm(props) {
     </section>
   );
 }
+
 
 export default QuestionForm;

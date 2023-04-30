@@ -1,6 +1,7 @@
 import React,{useState,useEffect}from "react";
 import QuestionItem from "./QuestionItem";
 
+
 function QuestionList() {
   const [questions,setQuesions] = useState([])
 
